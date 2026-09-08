@@ -13,13 +13,14 @@ export const PARAMETRI_2026 = {
 
   // INPS circ. n. 6 del 30/01/2026
   inps: {
-    aliquota: 0.0919,
+    aliquota: 0.0919, // IVS a carico dipendente, impiegato settore privato. Varia con CCNL e qualifica.
     aliquotaAggiuntiva: 0.01,
     primaFascia: 56224,
     massimale: 122295,
   },
 
   // Art. 11 TUIR, mod. art. 1 c.3 L. 199/2025
+  // ATTENZIONE: secondo scaglione 33%, NON 35%. Il 35% era 2024-2025.
   irpef: [
     { fino: 28000, aliquota: 0.23 },
     { fino: 50000, aliquota: 0.33 },
@@ -65,6 +66,8 @@ export const PARAMETRI_2026 = {
     { fino: Infinity, aliquota: 0.0173 },
   ] as Scaglione[],
 
+  // Solo comuni con delibera verificata su portale MEF.
+  // "esenzioneFinoA" e' una SOGLIA, non una franchigia: superata, si paga sull'INTERO imponibile.
   comuni: [
     {
       nome: "San Rocco al Porto (LO)",
