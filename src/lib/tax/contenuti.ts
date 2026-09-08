@@ -209,13 +209,11 @@ export function normaComunale(delibera: string): string {
 export const PASSI_GUIDA = [
   {
     titolo: "1 — Dal lordo all'imponibile",
-    testo:
-      "I contributi INPS a tuo carico si tolgono dalla RAL prima di ogni imposta: sono deducibili. Il reddito su cui si calcolano IRPEF e addizionali è quindi più basso della RAL.",
+    testo: `I contributi INPS a tuo carico (${percentuale(P.inps.aliquota)}, più ${percentuale(P.inps.aliquotaAggiuntiva)} sulla parte oltre ${euro(P.inps.primaFascia)}) si tolgono dalla RAL prima di ogni imposta: sono deducibili. Il reddito su cui si calcolano IRPEF e addizionali è quindi più basso della RAL.`,
   },
   {
     titolo: "2 — L'IRPEF a scaglioni",
-    testo:
-      "Ogni aliquota colpisce solo la parte di reddito che ricade nel proprio scaglione, mai tutto il reddito.",
+    testo: `Ogni aliquota colpisce solo la parte di reddito che ricade nel proprio scaglione, mai tutto il reddito: ${percentuale(P.irpef[0]!.aliquota)} fino a ${euro(P.irpef[0]!.fino)}, ${percentuale(P.irpef[1]!.aliquota)} fino a ${euro(P.irpef[1]!.fino)}, ${percentuale(P.irpef[2]!.aliquota)} oltre.`,
   },
   {
     titolo: "3 — Le detrazioni",
@@ -224,22 +222,19 @@ export const PASSI_GUIDA = [
   },
   {
     titolo: "4 — Il cuneo fiscale",
-    testo:
-      "Due strumenti alternativi: sotto i 20.000 € di imponibile una somma esente che si aggiunge al netto, sopra una detrazione d'imposta fino a 1.000 €.",
+    testo: `Due strumenti alternativi. Fino a ${euro(P.detrazioneCuneo.da)} di imponibile una somma esente che si aggiunge al netto; da ${euro(P.detrazioneCuneo.da + 1)} a ${euro(P.detrazioneCuneo.azzeraA)} una detrazione d'imposta, ${euro(P.detrazioneCuneo.importoFisso)} fissi fino a ${euro(P.detrazioneCuneo.fissaFinoA)} e poi decrescente fino ad azzerarsi. Sopra i ${euro(P.detrazioneCuneo.azzeraA)} non spetta né l'una né l'altra.`,
   },
   {
     titolo: "5 — Le addizionali locali",
-    testo:
-      "Regione e Comune tassano lo stesso imponibile. L'esenzione comunale è una soglia: superata, si paga sull'intero imponibile.",
+    testo: `Regione e Comune tassano lo stesso imponibile: in Lombardia l'addizionale regionale parte da ${percentuale(P.addizionaleRegionale[0]!.aliquota)}. L'esenzione comunale è una soglia: superata, si paga sull'intero imponibile.`,
   },
   {
     titolo: "6 — Dal netto fiscale al netto in busta",
-    testo:
-      "Al netto fiscale si sommano trattamento integrativo e somma esente, poi si divide per le mensilità: è una media, non il cedolino reale.",
+    testo: `Al netto fiscale si sommano trattamento integrativo (fino a ${euro(P.trattamentoIntegrativo.importoMax)}) e somma esente, poi si divide per le mensilità: è una media, non il cedolino reale.`,
   },
   {
     titolo: "7 — I limiti",
-    testo:
-      "Il calcolo assume un solo reddito, nessun familiare a carico e nessuna agevolazione. Cambiando queste ipotesi cambiano detrazioni e risultato.",
+    testo: `Il calcolo, riferito all'anno d'imposta ${P.annoImposta}, assume un solo reddito, nessun familiare a carico e nessuna agevolazione. Cambiando queste ipotesi cambiano detrazioni e risultato.`,
   },
 ];
+
