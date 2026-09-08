@@ -193,8 +193,17 @@ function Index() {
                 {euro(comune.esenzioneFinoA)}. Delibera {comune.delibera}.
               </p>
             )}
-            <div className="rounded-[12px] bg-[var(--soft)] px-4 py-3 text-[13px] leading-5 text-[var(--label)]">
-              Il calcolo si aggiorna a ogni modifica: non serve premere nulla.
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={ricalcola}
+                className="rounded-[8px] bg-[var(--ink)] px-6 py-2.5 text-[15px] font-semibold text-[var(--surface)]"
+              >
+                Calcola
+              </button>
+              <span className="text-[13px] leading-5 text-[var(--label)]">
+                Il calcolo si aggiorna anche a ogni modifica.
+              </span>
             </div>
 
             <p className="text-[13px] leading-5 text-[var(--label)]">
