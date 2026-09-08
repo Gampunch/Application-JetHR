@@ -1,4 +1,4 @@
-# Project Compass
+# Application JetHR
 
 Il file allegato è il contesto di progetto: parametri verificati, sequenza di calcolo, testi e design. Trattalo come riferimento vincolante per tutto il progetto, non modificarne i valori.
 
