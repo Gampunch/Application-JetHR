@@ -14,6 +14,13 @@ type Props = {
   approfondito: boolean;
 };
 
+/** Prima frase di un testo: usata solo in modalità Sintetico. */
+function primaFrase(testo: string): string {
+  const m = testo.match(/^[\s\S]*?[.!?](?=\s|$)/);
+  return m ? m[0].trim() : testo;
+}
+
+
 function Scaglioni({ righe }: { righe: RigaScaglione[] }) {
   if (righe.length === 0) return null;
   return (
