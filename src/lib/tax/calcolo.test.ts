@@ -133,3 +133,49 @@ describe("casi limite", () => {
     expect(r.nettoAnnuo).toBe(0);
   });
 });
+
+describe("giorni parziali — RAL 30.000, 180 giorni, 14 mensilita", () => {
+  const pieno = calcola({ ral: 30000 });
+  const parziale = calcola({ ral: 30000, giorni: 180 });
+  const q = 180 / 365;
+
+  it("valori attesi", () => {
+    const got = {
+      contributi: parziale.contributi,
+      imponibile: parziale.imponibile,
+      irpefLorda: parziale.irpefLorda,
+      detrazioneLavoro: parziale.detrazioneLavoro,
+      detrazioneCuneo: parziale.detrazioneCuneo,
+      irpefNetta: parziale.irpefNetta,
+      addReg: parziale.addizionaleRegionale,
+      addCom: parziale.addizionaleComunale,
+      nettoAnnuo: parziale.nettoAnnuo,
+    };
+    console.log(
+      `180gg: contributi ${got.contributi.toFixed(2)}/2757.00 · imponibile ${got.imponibile.toFixed(2)}/27243.00 · irpefLorda ${got.irpefLorda.toFixed(2)}/6265.89 · detrLavoro ${got.detrazioneLavoro.toFixed(2)}/976.09 · detrCuneo ${got.detrazioneCuneo.toFixed(2)}/493.15 · irpefNetta ${got.irpefNetta.toFixed(2)}/4796.65 · addReg ${got.addReg.toFixed(2)}/377.94 · addCom ${got.addCom.toFixed(2)}/217.94 · netto ${got.nettoAnnuo.toFixed(2)}/21850.47`,
+    );
+    expect(got.contributi).toBeCloseTo(2757.0, 2);
+    expect(got.imponibile).toBeCloseTo(27243.0, 2);
+    expect(got.irpefLorda).toBeCloseTo(6265.89, 2);
+    expect(got.detrazioneLavoro).toBeCloseTo(976.09, 2);
+    expect(got.detrazioneCuneo).toBeCloseTo(493.15, 2);
+    expect(got.irpefNetta).toBeCloseTo(4796.65, 2);
+    expect(got.addReg).toBeCloseTo(377.94, 2);
+    expect(got.addCom).toBeCloseTo(217.94, 2);
+    expect(got.nettoAnnuo).toBeCloseTo(21850.47, 2);
+  });
+
+  it("contributi, imponibile, IRPEF lorda e addizionali non dipendono dai giorni", () => {
+    expect(parziale.contributi).toBeCloseTo(pieno.contributi, 10);
+    expect(parziale.imponibile).toBeCloseTo(pieno.imponibile, 10);
+    expect(parziale.irpefLorda).toBeCloseTo(pieno.irpefLorda, 10);
+    expect(parziale.addizionaleRegionale).toBeCloseTo(pieno.addizionaleRegionale, 10);
+    expect(parziale.addizionaleComunale).toBeCloseTo(pieno.addizionaleComunale, 10);
+  });
+
+  it("detrazioni e trattamento sono riproporzionati per 180/365", () => {
+    expect(parziale.detrazioneLavoro).toBeCloseTo(pieno.detrazioneLavoro * q, 10);
+    expect(parziale.detrazioneCuneo).toBeCloseTo(pieno.detrazioneCuneo * q, 10);
+    expect(parziale.trattamento).toBeCloseTo(pieno.trattamento * q, 10);
+  });
+});
