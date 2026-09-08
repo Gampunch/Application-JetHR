@@ -218,7 +218,7 @@ function Index() {
           </div>
         </section>
 
-        <section className="rounded-[24px] border border-[var(--hairline)] p-6">
+        <section id="risultato" className="scroll-mt-6 rounded-[24px] border border-[var(--hairline)] p-6">
           <div className="mb-6 grid gap-4 rounded-[16px] bg-[var(--sage)] p-5 sm:grid-cols-3">
             <div>
               <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--sage-ink)]">
