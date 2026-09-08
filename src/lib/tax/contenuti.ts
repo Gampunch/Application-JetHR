@@ -51,7 +51,7 @@ export const CONTENUTI_DIDATTICI: Record<VoceId, Contenuto> = {
   imponibile: {
     titolo: "Reddito imponibile fiscale",
     cosE: "Il reddito su cui si calcolano l'IRPEF e le addizionali. Non coincide con la RAL.",
-    perche: `I contributi previdenziali sono deducibili, quindi si tolgono dal lordo prima del calcolo dell'imposta. È il motivo per cui le soglie fiscali (${numero(P.irpef[0]!.fino)}, ${numero(P.irpef[1]!.fino)}, le fasce del cuneo) vanno confrontate con questo valore e non con la RAL: con ${euro(28000)} di RAL l'imponibile è circa ${euro(25400)}, quindi si resta interamente nel primo scaglione.`,
+    perche: `I contributi previdenziali sono deducibili, quindi si tolgono dal lordo prima del calcolo dell'imposta. È il motivo per cui le soglie fiscali (${euro(P.irpef[0]!.fino)}, ${euro(P.irpef[1]!.fino)}, le fasce del cuneo) vanno confrontate con questo valore e non con la RAL: con ${euro(P.irpef[0]!.fino)} di RAL l'imponibile è circa ${euro(Math.round(P.irpef[0]!.fino * (1 - P.inps.aliquota)))}, quindi si resta interamente nel primo scaglione.`,
     nota: "Vale come reddito complessivo solo perché questo calcolo assume che tu non abbia altri redditi. Con redditi da locazione o un secondo lavoro il valore cambia e le detrazioni si riducono.",
   },
   irpefLorda: {
@@ -104,7 +104,7 @@ export const CONTENUTI_DIDATTICI: Record<VoceId, Contenuto> = {
   trattamento: {
     titolo: "Trattamento integrativo",
     cosE: `Una somma fino a ${euro(P.trattamentoIntegrativo.importoMax)} annui, erogata in busta paga ai redditi più bassi. È il successore del cosiddetto bonus Renzi.`,
-    perche: `Fino a ${euro(P.trattamentoIntegrativo.limiteFascia1)} di reddito spetta per intero, ma solo se l'imposta lorda supera la detrazione da lavoro diminuita di ${euro(P.trattamentoIntegrativo.correttivo)}: è una verifica di capienza che serve a non escludere chi ne aveva diritto prima che la detrazione salisse da ${euro(1880)} a ${euro(P.detrazioneLavoro.fascia1.importo)}. Fra ${numero(P.trattamentoIntegrativo.limiteFascia1 + 1)} e ${euro(P.trattamentoIntegrativo.limiteFascia2)} spetta solo in caso di incapienza, cioè se le detrazioni superano l'imposta: senza familiari a carico né mutuo, quasi mai.`,
+    perche: `Fino a ${euro(P.trattamentoIntegrativo.limiteFascia1)} di reddito spetta per intero, ma solo se l'imposta lorda supera la detrazione da lavoro diminuita di ${euro(P.trattamentoIntegrativo.correttivo)}: è una verifica di capienza che serve a non escludere chi ne aveva diritto prima che la detrazione salisse da ${euro(1880)} a ${euro(P.detrazioneLavoro.fascia1.importo)}. Fra ${euro(P.trattamentoIntegrativo.limiteFascia1 + 1)} e ${euro(P.trattamentoIntegrativo.limiteFascia2)} spetta solo in caso di incapienza, cioè se le detrazioni superano l'imposta: senza familiari a carico né mutuo, quasi mai.`,
     norma: "DL 3/2020 art. 1.",
   },
   netto: {
@@ -118,7 +118,7 @@ export const CONTENUTI_DIDATTICI: Record<VoceId, Contenuto> = {
 export const CONCETTI = [
   {
     titolo: "Deduzione o detrazione?",
-    testo: `Una deduzione si sottrae dal reddito prima di calcolare l'imposta: ${euro(1000)} di deduzione ti fanno risparmiare quanto la tua aliquota marginale, cioè ${numero(1000 * P.irpef[0]!.aliquota)}, ${numero(1000 * P.irpef[1]!.aliquota)} o ${euro(1000 * P.irpef[2]!.aliquota)}. Una detrazione si sottrae dall'imposta già calcolata: ${euro(1000)} di detrazione valgono sempre ${euro(1000)}, ma solo fino a capienza. I contributi INPS sono deduzioni; le detrazioni da lavoro e del cuneo sono detrazioni.`,
+    testo: `Una deduzione si sottrae dal reddito prima di calcolare l'imposta: ${euro(1000)} di deduzione ti fanno risparmiare quanto la tua aliquota marginale, cioè ${euro(1000 * P.irpef[0]!.aliquota)}, ${euro(1000 * P.irpef[1]!.aliquota)} o ${euro(1000 * P.irpef[2]!.aliquota)}. Una detrazione si sottrae dall'imposta già calcolata: ${euro(1000)} di detrazione valgono sempre ${euro(1000)}, ma solo fino a capienza. I contributi INPS sono deduzioni; le detrazioni da lavoro e del cuneo sono detrazioni.`,
   },
   {
     titolo: "Soglia o franchigia?",
@@ -162,18 +162,18 @@ export function comeSiCalcola(voce: VoceId, r: RisultatoCalcolo): string {
       if (r.imponibile <= d.fascia1.limite)
         return `Il maggiore fra ${euro(d.fascia1.importo)} riproporzionati e il minimo garantito di ${euro(d.fascia1.minimoGarantito)} = ${euro(r.detrazioneLavoro)}.${giorniNota}`;
       if (r.imponibile <= d.fascia2.limite)
-        return `${numero(d.fascia2.base)} + ${numero(d.fascia2.variabile)} × (${numero(d.fascia2.limite)} − ${euro(r.imponibile)}) / ${numero(d.fascia2.divisore)} = ${euro(r.detrazioneLavoro)}.${giorniNota}`;
+        return `${euro(d.fascia2.base)} + ${euro(d.fascia2.variabile)} × (${euro(d.fascia2.limite)} − ${euro(r.imponibile)}) / ${numero(d.fascia2.divisore)} = ${euro(r.detrazioneLavoro)}.${giorniNota}`;
       if (r.imponibile <= d.fascia3.limite)
-        return `${numero(d.fascia3.base)} × (${numero(d.fascia3.limite)} − ${euro(r.imponibile)}) / ${numero(d.fascia3.divisore)} = ${euro(r.detrazioneLavoro)}.${giorniNota}`;
+        return `${euro(d.fascia3.base)} × (${euro(d.fascia3.limite)} − ${euro(r.imponibile)}) / ${numero(d.fascia3.divisore)} = ${euro(r.detrazioneLavoro)}.${giorniNota}`;
       return `Non spettante: il tuo imponibile di ${euro(r.imponibile)} supera ${euro(d.fascia3.limite)}.`;
     }
     case "detrazioneCuneo": {
       const c = P.detrazioneCuneo;
       if (r.imponibile > c.da && r.imponibile <= c.fissaFinoA)
-        return `Il tuo imponibile di ${euro(r.imponibile)} rientra fra ${numero(c.da)} e ${euro(c.fissaFinoA)}: spettano ${euro(c.importoFisso)} pieni.${giorniNota}`;
+        return `Il tuo imponibile di ${euro(r.imponibile)} rientra fra ${euro(c.da)} e ${euro(c.fissaFinoA)}: spettano ${euro(c.importoFisso)} pieni.${giorniNota}`;
       if (r.imponibile > c.fissaFinoA && r.imponibile <= c.azzeraA)
-        return `${numero(c.importoFisso)} × (${numero(c.azzeraA)} − ${euro(r.imponibile)}) / ${numero(c.divisore)} = ${euro(r.detrazioneCuneo)}.${giorniNota}`;
-      return `Non spettante: il tuo imponibile di ${euro(r.imponibile)} è fuori dalla fascia ${numero(c.da)}–${euro(c.azzeraA)}.`;
+        return `${euro(c.importoFisso)} × (${euro(c.azzeraA)} − ${euro(r.imponibile)}) / ${numero(c.divisore)} = ${euro(r.detrazioneCuneo)}.${giorniNota}`;
+      return `Non spettante: il tuo imponibile di ${euro(r.imponibile)} è fuori dalla fascia ${euro(c.da)}–${euro(c.azzeraA)}.`;
     }
     case "irpefNetta":
       return `${euro(r.irpefLorda)} − ${euro(r.detrazioneLavoro)} − ${euro(r.detrazioneCuneo)} = ${euro(r.irpefNetta)}.`;
