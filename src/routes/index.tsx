@@ -123,8 +123,16 @@ function Index() {
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
         <section className="h-fit rounded-[24px] border border-[var(--hairline)] p-6">
+          <div className="mb-5 rounded-[16px] bg-[var(--soft)] p-4">
+            <LabelGruppo>Ipotesi del calcolo</LabelGruppo>
+            <p className="text-[13px] leading-5 text-[var(--label)]">
+              Impiegato a tempo indeterminato, settore privato, nessun familiare a carico,
+              nessuna agevolazione, nessun altro reddito.
+            </p>
+          </div>
           <LabelGruppo>I tuoi dati</LabelGruppo>
           <div className="space-y-4">
+
             <CampoEuro id="ral" label="RAL — retribuzione annua lorda" value={ral} onChange={setRal} grande />
             <div className="grid grid-cols-2 gap-3">
               <div>
