@@ -14,11 +14,6 @@ type Props = {
   approfondito: boolean;
 };
 
-/** Prima frase di un testo: usata solo in modalità Sintetico. */
-function primaFrase(testo: string): string {
-  const m = testo.match(/^[\s\S]*?[.!?](?=\s|$)/);
-  return m ? m[0].trim() : testo;
-}
 
 
 function Scaglioni({ righe }: { righe: RigaScaglione[] }) {
@@ -268,27 +263,30 @@ export default function Cascata({ r, approfondito }: Props) {
       >
         {contenuto && aperto ? (
           <>
-            <section>
-              <h4 className="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--label)]">
-                Cos'è
-              </h4>
-              <p>{approfondito ? contenuto.cosE : primaFrase(contenuto.cosE)}</p>
-            </section>
-
             {approfondito ? (
-              <section>
-                <h4 className="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--label)]">
-                  Perché si applica
-                </h4>
-                <p>{contenuto.perche}</p>
-              </section>
+              <>
+                <section>
+                  <h4 className="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--label)]">
+                    Cos'è
+                  </h4>
+                  <p>{contenuto.cosE}</p>
+                </section>
+                <section>
+                  <h4 className="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--label)]">
+                    Perché si applica
+                  </h4>
+                  <p>{contenuto.perche}</p>
+                </section>
+              </>
             ) : null}
             <section>
-              <h4 className="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--label)]">
-                Come si calcola nel tuo caso
-              </h4>
+              {approfondito ? (
+                <h4 className="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--label)]">
+                  Come si calcola nel tuo caso
+                </h4>
+              ) : null}
               <BoxFormula>{comeSiCalcola(aperto, r)}</BoxFormula>
-              {dettaglioAperto ? (
+              {approfondito && dettaglioAperto ? (
                 <div className="mt-3 overflow-x-auto">
                   <Scaglioni righe={dettaglioAperto} />
                 </div>
