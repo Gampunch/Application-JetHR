@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { calcola } from "@/lib/tax/calcolo";
 import { CONCETTI } from "@/lib/tax/contenuti";
 import { euro, percentuale } from "@/lib/tax/format";
@@ -35,6 +35,45 @@ export const Route = createFileRoute("/")({
 function numIt(v: string): number {
   const x = Number(v.replace(/\./g, "").replace(",", "."));
   return Number.isFinite(x) && x > 0 ? x : 0;
+}
+
+/** Sezione apribile: segue Sintetico/Approfondito, resta apribile a mano. */
+function SezioneAccordion({
+  aperta,
+  titolo,
+  conteggio,
+  children,
+}: {
+  aperta: boolean;
+  titolo: string;
+  conteggio: string;
+  children: ReactNode;
+}) {
+  const [apertaManualmente, setApertaManualmente] = useState<boolean | null>(null);
+  const apertaEffettiva = apertaManualmente ?? aperta;
+  return (
+    <section className="mt-10 rounded-[24px] border border-[var(--hairline)] p-6">
+      <button
+        type="button"
+        onClick={() => setApertaManualmente(!apertaEffettiva)}
+        aria-expanded={apertaEffettiva}
+        className="flex w-full items-center justify-between gap-3 text-left"
+      >
+        <span className="font-display text-2xl font-bold">{titolo}</span>
+        <span className="flex items-center gap-2 text-sm text-[var(--label)]">
+          {!apertaEffettiva ? (
+            <span className="rounded-full bg-[var(--soft)] px-2.5 py-0.5 text-xs font-semibold">
+              {conteggio}
+            </span>
+          ) : null}
+          <span aria-hidden className="text-lg leading-none">
+            {apertaEffettiva ? "−" : "+"}
+          </span>
+        </span>
+      </button>
+      {apertaEffettiva ? <div className="mt-4">{children}</div> : null}
+    </section>
+  );
 }
 
 function Index() {
@@ -114,7 +153,8 @@ function Index() {
               </button>
             </div>
             <p className="mt-1 text-[13px] leading-5 text-[var(--label)]">
-              Approfondito aggiunge cos'è, perché si applica e la norma di riferimento
+              Sintetico mostra i numeri. Approfondito aggiunge il perché di ogni regola
+              e la norma di riferimento.
             </p>
           </div>
         </div>
@@ -272,8 +312,11 @@ function Index() {
         />
       </section>
 
-      <section className="mt-10 rounded-[24px] border border-[var(--hairline)] p-6">
-        <h2 className="font-display mb-4 text-2xl font-bold">Quattro concetti da tenere a mente</h2>
+      <SezioneAccordion
+        aperta={approfondito}
+        titolo="Quattro concetti da tenere a mente"
+        conteggio={`${CONCETTI.length} concetti`}
+      >
         <div className="grid gap-4 sm:grid-cols-2">
           {CONCETTI.map((c) => (
             <div key={c.titolo} className="rounded-[16px] bg-[var(--soft)] p-5">
@@ -282,10 +325,13 @@ function Index() {
             </div>
           ))}
         </div>
-      </section>
+      </SezioneAccordion>
 
-      <section className="mt-10">
-        <h2 className="font-display mb-4 text-2xl font-bold">Limiti del calcolo</h2>
+      <SezioneAccordion
+        aperta={approfondito}
+        titolo="Limiti del calcolo"
+        conteggio="3"
+      >
         <div className="space-y-3">
           <Callout>
             Il netto mensile è una media: il cedolino reale differisce, perché tredicesima
@@ -305,7 +351,7 @@ function Index() {
         <p className="mt-6 text-[13px] text-[var(--label)]">
           Anno d'imposta {P.annoImposta}. Nessuna persistenza dei dati inseriti.
         </p>
-      </section>
+      </SezioneAccordion>
 
       <Guida aperta={guida} onClose={() => setGuida(false)} />
     </main>
