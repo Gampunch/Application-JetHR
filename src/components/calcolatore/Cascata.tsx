@@ -265,8 +265,9 @@ export default function Cascata({ r, approfondito }: Props) {
               <h4 className="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--label)]">
                 Cos'è
               </h4>
-              <p>{contenuto.cosE}</p>
+              <p>{approfondito ? contenuto.cosE : primaFrase(contenuto.cosE)}</p>
             </section>
+
             {approfondito ? (
               <section>
                 <h4 className="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--label)]">
