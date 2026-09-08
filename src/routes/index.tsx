@@ -46,6 +46,7 @@ function Index() {
   const [sogliaManuale, setSogliaManuale] = useState("0");
   const [approfondito, setApprofondito] = useState(false);
   const [guida, setGuida] = useState(false);
+  const [tick, setTick] = useState(0);
 
   useEffect(() => {
     setGuida(true);
@@ -71,8 +72,13 @@ function Index() {
         giorni: numIt(giorni) || 365,
         comune,
       }),
-    [ral, mensilita, giorni, comune],
+    [ral, mensilita, giorni, comune, tick],
   );
+
+  function ricalcola() {
+    setTick((t) => t + 1);
+    document.getElementById("risultato")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:py-16">
@@ -193,8 +199,17 @@ function Index() {
                 {euro(comune.esenzioneFinoA)}. Delibera {comune.delibera}.
               </p>
             )}
-            <div className="rounded-[12px] bg-[var(--soft)] px-4 py-3 text-[13px] leading-5 text-[var(--label)]">
-              Il calcolo si aggiorna a ogni modifica: non serve premere nulla.
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={ricalcola}
+                className="rounded-[8px] bg-[var(--ink)] px-6 py-2.5 text-[15px] font-semibold text-[var(--surface)]"
+              >
+                Calcola
+              </button>
+              <span className="text-[13px] leading-5 text-[var(--label)]">
+                Il calcolo si aggiorna anche a ogni modifica.
+              </span>
             </div>
 
             <p className="text-[13px] leading-5 text-[var(--label)]">
@@ -203,7 +218,7 @@ function Index() {
           </div>
         </section>
 
-        <section className="rounded-[24px] border border-[var(--hairline)] p-6">
+        <section id="risultato" className="scroll-mt-6 rounded-[24px] border border-[var(--hairline)] p-6">
           <div className="mb-6 grid gap-4 rounded-[16px] bg-[var(--sage)] p-5 sm:grid-cols-3">
             <div>
               <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--sage-ink)]">
