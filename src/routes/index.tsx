@@ -193,9 +193,10 @@ function Index() {
                 {euro(comune.esenzioneFinoA)}. Delibera {comune.delibera}.
               </p>
             )}
-            <BottonePrimario className="w-full" type="button">
-              Il calcolo si aggiorna da solo
-            </BottonePrimario>
+            <div className="rounded-[12px] bg-[var(--soft)] px-4 py-3 text-[13px] leading-5 text-[var(--label)]">
+              Il calcolo si aggiorna a ogni modifica: non serve premere nulla.
+            </div>
+
             <p className="text-[13px] leading-5 text-[var(--label)]">
               Nessun dato viene salvato o inviato.
             </p>
