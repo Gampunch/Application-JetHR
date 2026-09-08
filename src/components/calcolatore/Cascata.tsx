@@ -238,7 +238,7 @@ export default function Cascata({ r, approfondito }: Props) {
             <IconaInfo onClick={() => setAperto("imponibile")} label="Reddito imponibile" />
             <span className="text-[15px] font-semibold">Reddito imponibile fiscale</span>
           </div>
-          <span className="tabular text-[15px] font-semibold">{euro(r.imponibile)}</span>
+          <span className="tabular text-[15px] font-semibold">{euro(r.imponibile, true)}</span>
         </div>
       </div>
 

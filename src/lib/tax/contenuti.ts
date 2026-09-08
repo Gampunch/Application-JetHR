@@ -154,7 +154,7 @@ export function comeSiCalcola(voce: VoceId, r: RisultatoCalcolo): string {
         ? `La parte di RAL che supera ${euro(P.inps.primaFascia)} è ${euro(r.eccedenzaPrimaFascia)}. Su questa: ${euro(r.eccedenzaPrimaFascia)} × ${percentuale(P.inps.aliquotaAggiuntiva, 0)} = ${euro(r.contributiAggiuntivi)}.`
         : `Non dovuto: la tua RAL non supera ${euro(P.inps.primaFascia)}.`;
     case "imponibile":
-      return `${euro(r.ral)} − ${euro(r.contributi)} = ${euro(r.imponibile)}.`;
+      return `${euro(r.ral)} − ${euro(r.contributi)} = ${euro(r.imponibile, true)}.`;
     case "irpefLorda":
       return `Dettaglio per scaglione qui sotto, totale ${euro(r.irpefLorda)}.`;
     case "detrazioneLavoro": {
@@ -162,18 +162,18 @@ export function comeSiCalcola(voce: VoceId, r: RisultatoCalcolo): string {
       if (r.imponibile <= d.fascia1.limite)
         return `Il maggiore fra ${euro(d.fascia1.importo)} riproporzionati e il minimo garantito di ${euro(d.fascia1.minimoGarantito)} = ${euro(r.detrazioneLavoro)}.${giorniNota}`;
       if (r.imponibile <= d.fascia2.limite)
-        return `${euro(d.fascia2.base)} + ${euro(d.fascia2.variabile)} × (${euro(d.fascia2.limite)} − ${euro(r.imponibile)}) / ${numero(d.fascia2.divisore)} = ${euro(r.detrazioneLavoro)}.${giorniNota}`;
+        return `${euro(d.fascia2.base)} + ${euro(d.fascia2.variabile)} × (${euro(d.fascia2.limite)} − ${euro(r.imponibile, true)}) / ${numero(d.fascia2.divisore)} = ${euro(r.detrazioneLavoro)}.${giorniNota}`;
       if (r.imponibile <= d.fascia3.limite)
-        return `${euro(d.fascia3.base)} × (${euro(d.fascia3.limite)} − ${euro(r.imponibile)}) / ${numero(d.fascia3.divisore)} = ${euro(r.detrazioneLavoro)}.${giorniNota}`;
-      return `Non spettante: il tuo imponibile di ${euro(r.imponibile)} supera ${euro(d.fascia3.limite)}.`;
+        return `${euro(d.fascia3.base)} × (${euro(d.fascia3.limite)} − ${euro(r.imponibile, true)}) / ${numero(d.fascia3.divisore)} = ${euro(r.detrazioneLavoro)}.${giorniNota}`;
+      return `Non spettante: il tuo imponibile di ${euro(r.imponibile, true)} supera ${euro(d.fascia3.limite)}.`;
     }
     case "detrazioneCuneo": {
       const c = P.detrazioneCuneo;
       if (r.imponibile > c.da && r.imponibile <= c.fissaFinoA)
-        return `Il tuo imponibile di ${euro(r.imponibile)} rientra fra ${euro(c.da)} e ${euro(c.fissaFinoA)}: spettano ${euro(c.importoFisso)} pieni.${giorniNota}`;
+        return `Il tuo imponibile di ${euro(r.imponibile, true)} rientra fra ${euro(c.da)} e ${euro(c.fissaFinoA)}: spettano ${euro(c.importoFisso)} pieni.${giorniNota}`;
       if (r.imponibile > c.fissaFinoA && r.imponibile <= c.azzeraA)
-        return `${euro(c.importoFisso)} × (${euro(c.azzeraA)} − ${euro(r.imponibile)}) / ${numero(c.divisore)} = ${euro(r.detrazioneCuneo)}.${giorniNota}`;
-      return `Non spettante: il tuo imponibile di ${euro(r.imponibile)} è fuori dalla fascia ${euro(c.da)}–${euro(c.azzeraA)}.`;
+        return `${euro(c.importoFisso)} × (${euro(c.azzeraA)} − ${euro(r.imponibile, true)}) / ${numero(c.divisore)} = ${euro(r.detrazioneCuneo)}.${giorniNota}`;
+      return `Non spettante: il tuo imponibile di ${euro(r.imponibile, true)} è fuori dalla fascia ${euro(c.da)}–${euro(c.azzeraA)}.`;
     }
     case "irpefNetta":
       return `${euro(r.irpefLorda)} − ${euro(r.detrazioneLavoro)} − ${euro(r.detrazioneCuneo)} = ${euro(r.irpefNetta)}.`;
@@ -181,11 +181,11 @@ export function comeSiCalcola(voce: VoceId, r: RisultatoCalcolo): string {
       return `Dettaglio per scaglione qui sotto, totale ${euro(r.addizionaleRegionale)}.`;
     case "addizionaleComunale":
       return r.addizionaleComunale > 0
-        ? `Il tuo imponibile di ${euro(r.imponibile)} supera la soglia di esenzione di ${euro(r.comune.esenzioneFinoA)}: ${euro(r.imponibile)} × ${percentuale(r.comune.aliquota)} = ${euro(r.addizionaleComunale)}.`
-        : `Non dovuta: il tuo imponibile di ${euro(r.imponibile)} non supera la soglia di esenzione di ${euro(r.comune.esenzioneFinoA)}.`;
+        ? `Il tuo imponibile di ${euro(r.imponibile, true)} supera la soglia di esenzione di ${euro(r.comune.esenzioneFinoA)}: ${euro(r.imponibile, true)} × ${percentuale(r.comune.aliquota)} = ${euro(r.addizionaleComunale)}.`
+        : `Non dovuta: il tuo imponibile di ${euro(r.imponibile, true)} non supera la soglia di esenzione di ${euro(r.comune.esenzioneFinoA)}.`;
     case "sommaEsente":
       return r.sommaEsente > 0
-        ? `Il tuo imponibile di ${euro(r.imponibile)} rientra nella fascia con percentuale ${percentuale(r.percentualeSommaEsente, 1)}: ${euro(r.imponibile)} × ${percentuale(r.percentualeSommaEsente, 1)} = ${euro(r.sommaEsente)}.`
+        ? `Il tuo imponibile di ${euro(r.imponibile, true)} rientra nella fascia con percentuale ${percentuale(r.percentualeSommaEsente, 1)}: ${euro(r.imponibile, true)} × ${percentuale(r.percentualeSommaEsente, 1)} = ${euro(r.sommaEsente)}.`
         : `Non spettante: il tuo imponibile supera i ${euro(P.detrazioneCuneo.da)}. Al suo posto ti spetta l'ulteriore detrazione, che trovi più in alto.`;
     case "trattamento": {
       const t = P.trattamentoIntegrativo;
