@@ -126,12 +126,12 @@ function Index() {
           Anno d'imposta {P.annoImposta}
         </div>
         <h1 className="font-display text-4xl font-extrabold leading-tight sm:text-5xl">
-          Calcolatore RAL → netto
+          Dalla RAL al netto
         </h1>
         <p className="mt-3 max-w-2xl text-[var(--label)]">
           Ogni trattenuta spiegata voce per voce, con i tuoi numeri dentro
         </p>
-        <div className="mt-4 flex flex-wrap items-center gap-3">
+        <div className="mt-6 flex flex-col items-start gap-4">
           <BottonePrimario onClick={() => setGuida(true)}>
             Come funziona il calcolo
           </BottonePrimario>
@@ -152,9 +152,8 @@ function Index() {
                 Approfondito
               </button>
             </div>
-            <p className="mt-1 text-[13px] leading-5 text-[var(--label)]">
-              Sintetico mostra i numeri. Approfondito aggiunge il perché di ogni regola
-              e la norma di riferimento.
+            <p className="mt-1.5 text-[13px] leading-5 text-[var(--label)]">
+              Approfondito aggiunge il perché e la norma di riferimento.
             </p>
           </div>
         </div>
