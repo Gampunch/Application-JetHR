@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { calcola } from "@/lib/tax/calcolo";
 import { CONCETTI } from "@/lib/tax/contenuti";
 import { euro, percentuale } from "@/lib/tax/format";
@@ -47,7 +47,7 @@ function SezioneAccordion({
   aperta: boolean;
   titolo: string;
   conteggio: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const [apertaManualmente, setApertaManualmente] = useState<boolean | null>(null);
   const apertaEffettiva = apertaManualmente ?? aperta;
