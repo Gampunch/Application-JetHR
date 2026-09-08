@@ -87,35 +87,39 @@ function Index() {
           Anno d'imposta {P.annoImposta}
         </div>
         <h1 className="font-display text-4xl font-extrabold leading-tight sm:text-5xl">
-          Dalla RAL al netto in busta paga
+          Calcolatore RAL → netto
         </h1>
         <p className="mt-3 max-w-2xl text-[var(--label)]">
-          Impiegato a tempo indeterminato, settore privato, nessun familiare a carico,
-          nessuna agevolazione e nessun altro reddito. Ogni voce è spiegata con i tuoi
-          numeri dentro.
+          Ogni trattenuta spiegata voce per voce, con i tuoi numeri dentro
         </p>
-        <div className="mt-4 flex flex-wrap items-center gap-2">
-          <BottoneSecondario onClick={() => setGuida(true)}>
-            Percorso guidato in 7 passi
-          </BottoneSecondario>
-          <div className="inline-flex rounded-[8px] border border-[var(--hairline)] p-0.5">
-            <button
-              type="button"
-              onClick={() => setApprofondito(false)}
-              className={`rounded-[6px] px-3 py-1.5 text-sm ${!approfondito ? "bg-[var(--ink)] text-white" : "text-[var(--label)]"}`}
-            >
-              Sintetico
-            </button>
-            <button
-              type="button"
-              onClick={() => setApprofondito(true)}
-              className={`rounded-[6px] px-3 py-1.5 text-sm ${approfondito ? "bg-[var(--ink)] text-white" : "text-[var(--label)]"}`}
-            >
-              Approfondito
-            </button>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <BottonePrimario onClick={() => setGuida(true)}>
+            Come funziona il calcolo
+          </BottonePrimario>
+          <div>
+            <div className="inline-flex rounded-[8px] border border-[var(--hairline)] p-0.5">
+              <button
+                type="button"
+                onClick={() => setApprofondito(false)}
+                className={`rounded-[6px] px-3 py-1.5 text-sm ${!approfondito ? "bg-[var(--ink)] text-white" : "text-[var(--label)]"}`}
+              >
+                Sintetico
+              </button>
+              <button
+                type="button"
+                onClick={() => setApprofondito(true)}
+                className={`rounded-[6px] px-3 py-1.5 text-sm ${approfondito ? "bg-[var(--ink)] text-white" : "text-[var(--label)]"}`}
+              >
+                Approfondito
+              </button>
+            </div>
+            <p className="mt-1 text-[13px] leading-5 text-[var(--label)]">
+              Approfondito aggiunge il perché della regola e la norma di riferimento
+            </p>
           </div>
         </div>
       </header>
+
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
         <section className="h-fit rounded-[24px] border border-[var(--hairline)] p-6">
