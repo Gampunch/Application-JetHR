@@ -132,13 +132,57 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+/* --- Design system Jet HR-like, calcolatore RAL --- */
+:root {
+  --surface: #ffffff;
+  --ink: #11150a; /* nero con virata verde, NON usare #000 */
+  --hairline: #e5e7eb;
+  --label: #6b7280;
+  --soft: #f6f7f5; /* box formula */
+  --sage: #e8efe3;
+  --sage-ink: #3f5b33;
+  --lime: #f4f7d9;
+  --lime-ink: #55591f;
+  --font-display: "Wix Madefor Display", sans-serif;
+  --font-text: "Wix Madefor Text", sans-serif;
+}
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-hairline: var(--hairline);
+  --color-label: var(--label);
+  --color-soft: var(--soft);
+  --color-sage: var(--sage);
+  --color-sage-ink: var(--sage-ink);
+  --color-lime: var(--lime);
+  --color-lime-ink: var(--lime-ink);
+  --font-display: var(--font-display);
+  --font-text: var(--font-text);
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
   }
 
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    background-color: var(--surface);
+    color: var(--ink);
+    font-family: var(--font-text);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
   }
 }
+
