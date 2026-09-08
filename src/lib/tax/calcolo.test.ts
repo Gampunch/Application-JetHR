@@ -3,7 +3,7 @@ import { calcola } from "./calcolo";
 import { inverso } from "./inverso";
 import { PARAMETRI_2026 } from "./parametri2026";
 
-const MILANO = PARAMETRI_2026.comuni[1];
+const MILANO = PARAMETRI_2026.comuni[1]!;
 
 type Attesa = {
   ral: number;
@@ -87,12 +87,12 @@ describe("discontinuita attese — esattamente tre", () => {
     }
     console.log("discontinuita:", punti.map((p) => `RAL ${p.ral} ${Math.round(p.delta)} EUR`).join(" · "));
     expect(punti.length).toBe(3);
-    expect(punti[0].ral).toBeGreaterThan(9300);
-    expect(punti[0].ral).toBeLessThan(9450);
-    expect(punti[1].ral).toBeGreaterThan(13150);
-    expect(punti[1].ral).toBeLessThan(13300);
-    expect(punti[2].ral).toBeGreaterThan(16450);
-    expect(punti[2].ral).toBeLessThan(16600);
+    expect(punti[0]!.ral).toBeGreaterThan(9300);
+    expect(punti[0]!.ral).toBeLessThan(9450);
+    expect(punti[1]!.ral).toBeGreaterThan(13150);
+    expect(punti[1]!.ral).toBeLessThan(13300);
+    expect(punti[2]!.ral).toBeGreaterThan(16450);
+    expect(punti[2]!.ral).toBeLessThan(16600);
   });
 
   it("con Milano la soglia comunale si sposta a ~25.350", () => {

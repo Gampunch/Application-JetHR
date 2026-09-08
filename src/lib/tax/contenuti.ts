@@ -51,7 +51,7 @@ export const CONTENUTI_DIDATTICI: Record<VoceId, Contenuto> = {
   imponibile: {
     titolo: "Reddito imponibile fiscale",
     cosE: "Il reddito su cui si calcolano l'IRPEF e le addizionali. Non coincide con la RAL.",
-    perche: `I contributi previdenziali sono deducibili, quindi si tolgono dal lordo prima del calcolo dell'imposta. È il motivo per cui le soglie fiscali (${numero(P.irpef[0].fino)}, ${numero(P.irpef[1].fino)}, le fasce del cuneo) vanno confrontate con questo valore e non con la RAL: con ${euro(28000)} di RAL l'imponibile è circa ${euro(25400)}, quindi si resta interamente nel primo scaglione.`,
+    perche: `I contributi previdenziali sono deducibili, quindi si tolgono dal lordo prima del calcolo dell'imposta. È il motivo per cui le soglie fiscali (${numero(P.irpef[0]!.fino)}, ${numero(P.irpef[1]!.fino)}, le fasce del cuneo) vanno confrontate con questo valore e non con la RAL: con ${euro(28000)} di RAL l'imponibile è circa ${euro(25400)}, quindi si resta interamente nel primo scaglione.`,
     nota: "Vale come reddito complessivo solo perché questo calcolo assume che tu non abbia altri redditi. Con redditi da locazione o un secondo lavoro il valore cambia e le detrazioni si riducono.",
   },
   irpefLorda: {
@@ -59,7 +59,7 @@ export const CONTENUTI_DIDATTICI: Record<VoceId, Contenuto> = {
     cosE: "L'imposta sul reddito prima di sottrarre le detrazioni.",
     perche:
       "È progressiva per scaglioni: ogni aliquota colpisce solo la parte di reddito compresa nel proprio scaglione, non tutto il reddito. È l'errore di lettura più comune: \u201Csono passato di scaglione\u201D non significa quasi mai che si paga di più su tutto.",
-    norma: `Art. 11 TUIR, modificato dall'art. 1 c. 3 della L. 199/2025. Dal ${P.annoImposta} il secondo scaglione è sceso dal 35% al ${percentuale(P.irpef[1].aliquota, 0)}.`,
+    norma: `Art. 11 TUIR, modificato dall'art. 1 c. 3 della L. 199/2025. Dal ${P.annoImposta} il secondo scaglione è sceso dal 35% al ${percentuale(P.irpef[1]!.aliquota, 0)}.`,
   },
   detrazioneLavoro: {
     titolo: "Detrazione per lavoro dipendente",
@@ -118,7 +118,7 @@ export const CONTENUTI_DIDATTICI: Record<VoceId, Contenuto> = {
 export const CONCETTI = [
   {
     titolo: "Deduzione o detrazione?",
-    testo: `Una deduzione si sottrae dal reddito prima di calcolare l'imposta: ${euro(1000)} di deduzione ti fanno risparmiare quanto la tua aliquota marginale, cioè ${numero(1000 * P.irpef[0].aliquota)}, ${numero(1000 * P.irpef[1].aliquota)} o ${euro(1000 * P.irpef[2].aliquota)}. Una detrazione si sottrae dall'imposta già calcolata: ${euro(1000)} di detrazione valgono sempre ${euro(1000)}, ma solo fino a capienza. I contributi INPS sono deduzioni; le detrazioni da lavoro e del cuneo sono detrazioni.`,
+    testo: `Una deduzione si sottrae dal reddito prima di calcolare l'imposta: ${euro(1000)} di deduzione ti fanno risparmiare quanto la tua aliquota marginale, cioè ${numero(1000 * P.irpef[0]!.aliquota)}, ${numero(1000 * P.irpef[1]!.aliquota)} o ${euro(1000 * P.irpef[2]!.aliquota)}. Una detrazione si sottrae dall'imposta già calcolata: ${euro(1000)} di detrazione valgono sempre ${euro(1000)}, ma solo fino a capienza. I contributi INPS sono deduzioni; le detrazioni da lavoro e del cuneo sono detrazioni.`,
   },
   {
     titolo: "Soglia o franchigia?",

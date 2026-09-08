@@ -4,7 +4,7 @@ import { BottonePrimario, BottoneSecondario, Pannello } from "./ui";
 
 export default function Guida({ aperta, onClose }: { aperta: boolean; onClose: () => void }) {
   const [passo, setPasso] = useState(0);
-  const p = PASSI_GUIDA[passo];
+  const p = PASSI_GUIDA[passo]!;
 
   function chiudi() {
     setPasso(0);
