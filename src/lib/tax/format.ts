@@ -4,7 +4,7 @@ const euroFmt = new Intl.NumberFormat("it-IT", {
   minimumFractionDigits: 0,
   maximumFractionDigits: 0,
   useGrouping: "always",
-});
+} as Intl.NumberFormatOptions);
 
 const euroFmt2 = new Intl.NumberFormat("it-IT", {
   style: "currency",
@@ -12,12 +12,12 @@ const euroFmt2 = new Intl.NumberFormat("it-IT", {
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
   useGrouping: "always",
-});
+} as Intl.NumberFormatOptions);
 
 const numFmt = new Intl.NumberFormat("it-IT", {
   maximumFractionDigits: 0,
   useGrouping: "always",
-});
+} as Intl.NumberFormatOptions);
 
 export function euro(v: number, decimali = false): string {
   const n = Number.isFinite(v) ? v : 0;
@@ -34,5 +34,8 @@ export function segnato(v: number, segno: "+" | "−"): string {
 
 export function percentuale(v: number, decimali = 2): string {
   const n = (Number.isFinite(v) ? v : 0) * 100;
-  return `${n.toLocaleString("it-IT", { maximumFractionDigits: decimali, useGrouping: "always" })}%`;
+  return `${n.toLocaleString("it-IT", {
+    maximumFractionDigits: decimali,
+    useGrouping: "always",
+  } as Intl.NumberFormatOptions)}%`;
 }
