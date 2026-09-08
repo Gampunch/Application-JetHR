@@ -37,6 +37,45 @@ function numIt(v: string): number {
   return Number.isFinite(x) && x > 0 ? x : 0;
 }
 
+/** Sezione apribile: segue Sintetico/Approfondito, resta apribile a mano. */
+function SezioneAccordion({
+  aperta,
+  titolo,
+  conteggio,
+  children,
+}: {
+  aperta: boolean;
+  titolo: string;
+  conteggio: string;
+  children: React.ReactNode;
+}) {
+  const [apertaManualmente, setApertaManualmente] = useState<boolean | null>(null);
+  const apertaEffettiva = apertaManualmente ?? aperta;
+  return (
+    <section className="mt-10 rounded-[24px] border border-[var(--hairline)] p-6">
+      <button
+        type="button"
+        onClick={() => setApertaManualmente(!apertaEffettiva)}
+        aria-expanded={apertaEffettiva}
+        className="flex w-full items-center justify-between gap-3 text-left"
+      >
+        <span className="font-display text-2xl font-bold">{titolo}</span>
+        <span className="flex items-center gap-2 text-sm text-[var(--label)]">
+          {!apertaEffettiva ? (
+            <span className="rounded-full bg-[var(--soft)] px-2.5 py-0.5 text-xs font-semibold">
+              {conteggio}
+            </span>
+          ) : null}
+          <span aria-hidden className="text-lg leading-none">
+            {apertaEffettiva ? "−" : "+"}
+          </span>
+        </span>
+      </button>
+      {apertaEffettiva ? <div className="mt-4">{children}</div> : null}
+    </section>
+  );
+}
+
 function Index() {
   const [ral, setRal] = useState("30000");
   const [mensilita, setMensilita] = useState("14");
