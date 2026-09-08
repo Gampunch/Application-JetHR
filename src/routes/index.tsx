@@ -114,7 +114,7 @@ function Index() {
               </button>
             </div>
             <p className="mt-1 text-[13px] leading-5 text-[var(--label)]">
-              Approfondito aggiunge il perché della regola e la norma di riferimento
+              Approfondito aggiunge cos'è, perché si applica e la norma di riferimento
             </p>
           </div>
         </div>
