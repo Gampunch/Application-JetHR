@@ -46,6 +46,7 @@ function Index() {
   const [sogliaManuale, setSogliaManuale] = useState("0");
   const [approfondito, setApprofondito] = useState(false);
   const [guida, setGuida] = useState(false);
+  const [tick, setTick] = useState(0);
 
   useEffect(() => {
     setGuida(true);
@@ -71,8 +72,13 @@ function Index() {
         giorni: numIt(giorni) || 365,
         comune,
       }),
-    [ral, mensilita, giorni, comune],
+    [ral, mensilita, giorni, comune, tick],
   );
+
+  function ricalcola() {
+    setTick((t) => t + 1);
+    document.getElementById("risultato")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:py-16">
