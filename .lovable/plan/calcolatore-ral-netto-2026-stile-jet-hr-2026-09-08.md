@@ -32,3 +32,7 @@ I testi dei pannelli vengono copiati alla lettera dal documento in un file separ
 - Design: token in `src/styles.css` (`--ink #11150A`, bordo `#E5E7EB`, verde salvia, giallo-lime, grigi), font Wix Madefor Display/Text caricati via `<link>` nella radice, cifre tabulari sulla colonna importi, raggi in gerarchia (24/16/12–16/8 px), segni + e − espliciti.
 - Pagina costruita su `src/routes/index.tsx`, con titolo e descrizione propri.
 - Il documento viene salvato nella memoria di progetto come regola permanente.
+
+&nbsp;
+
+Dopo aver scritto i test, eseguili e mostrami l'output completo con i valori ottenuti accanto a quelli attesi, prima di procedere con l'interfaccia. Se un test non passa, fermati e segnalalo invece di adattare i valori attesi.
